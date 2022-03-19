@@ -1,0 +1,7 @@
+.bootstrap-tagsinput {
+    text-align:left;
+}
+.bootstrap-tagsinput input {
+    border:0!important;
+    display:unset!important;
+}
