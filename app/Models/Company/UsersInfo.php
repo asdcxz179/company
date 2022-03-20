@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Lang;
 
 class UsersInfo extends DinjUsersInfo
 {
+    public $appends = ['trans'];
     public function getTransAttribute() {
         $key = strtoupper($this->attributes['key']);
         $value =  $this->attributes['value'];

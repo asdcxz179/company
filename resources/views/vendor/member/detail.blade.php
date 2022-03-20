@@ -129,7 +129,7 @@
 @endpush
 @push('javascript')
 <script>
-    sendApi( "{{ route('Admin.Member.show',['Member' => request()->Member],false) }}","GET","", (data) => {
+    sendApi( "{{ route('Dinj.Member.show',['Member' => request()->Member],false) }}","GET","", (data) => {
         var result = data.data;
         Object.keys(result).map((item)=>{
             let text = '';
