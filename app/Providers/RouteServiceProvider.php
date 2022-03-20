@@ -48,23 +48,10 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/web.php'));
         });
 
-        $admin = "admin";
-        if(preg_match("/^\/dinjApi/i",$this->app->request->getPathInfo()) || (env("AUTH_MODE")=="session" && preg_match("/^\/Backend/i",$this->app->request->getPathInfo()) )) {
-            $admin = "dinjApi";
-            config(['auth.defaults.guard' => $admin]);
-            config(['auth.guards.dinjApi.driver' => env('AUTH_MODE','jwt')]);
-        }
+        $this->routes(function (){
+            Route::namespace($this->namespace)->group(base_path('routes/DinjApi.php'));
 
-        $this->routes(function () use ($admin) {
-            Route::prefix('DinjApi/v1')
-                ->middleware('dinjApi')
-                ->namespace('App\Http\Controllers')
-                ->name('Dinj.')
-                ->group(base_path('routes/DinjApi.php'));
-
-            Route::middleware($admin)
-                ->namespace($this->namespace)
-                ->group(base_path('routes/DinjWeb.php'));
+            Route::namespace($this->namespace)->group(base_path('routes/DinjWeb.php'));
         });
     }
 
