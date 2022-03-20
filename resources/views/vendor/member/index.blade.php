@@ -10,7 +10,7 @@
                             <input type="text" name="account" placeholder="帳號" class="form-control">
                         </div>
                         <div class="col-lg-2 mb-3">
-                            <input type="text" name="name" placeholder="姓名" class="form-control">
+                            <input type="text" name="company" placeholder="公司名稱" class="form-control">
                         </div>
                         <div class="col-lg-2 mb-3">
                             <input type="text" name="email" placeholder="Email" class="form-control">
@@ -45,8 +45,9 @@
                         <tr>
                             <th>#</th>
                             <th data-priority="1">公司編號</th>
+                            <th data-priority="1">公司名稱</th>
                             <th data-priority="2">帳號</th>
-                            <th data-priority="2">姓名</th>
+                            <th data-priority="2">負責人</th>
                             <th data-priority="3">Email</th>
                             <th data-priority="4">手機電話</th>
                             <th data-priority="5">註冊時間</th>
@@ -84,6 +85,7 @@
         [
             { data: "uuid",  className: "text-center", render: (data, type, full, meta) => { return meta.row + 1 + meta.settings._iDisplayStart;}},
             { data: "number",    className: "text-center"},
+            { data: "company",    className: "text-center", render:(data,type,row,meta) => { return (row.info.find(item=>item.key=="company")??{}).value; }},
             { data: "account",    className: "text-center",render:(data,type,row,meta) => { return `<a href="/Backend/Member/${row.uuid}">${data}</a>`;} },
             { data: "name",    className: "text-center" },
             { data: "email",    className: "text-center", render:(data,type,row,meta) => { return (row.info.find(item=>item.key=="email")??{}).value; }},

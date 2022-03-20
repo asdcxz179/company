@@ -6,6 +6,7 @@ use App\Repositories\Company\UsersRepository;
 use App\Repositories\Company\UsersInfoRepository;
 use Tymon\JWTAuth\JWTAuth;
 use Dinj\Member\Services\UsersService as DinjUsersService;
+use Illuminate\Support\Arr;
 
 /**
  * Class UsersService.
@@ -41,4 +42,16 @@ class UsersService extends DinjUsersService
         $this->auth = $auth;
     }
 
+    /**
+     * 使用者列表
+     * @param array $data
+     * @version 1.0
+     * @author Henry
+     * @return \DataTables
+     */
+    public function index($data) {
+        $where = Arr::only($data,["name","account","status","email","phone","company"]);
+        return $this->UsersRepository->listQuery($where);
+    }
+    
 }

@@ -31,4 +31,29 @@ class UsersRepository extends DinjUsersRepository
         parent::__construct($users);
     }
 
+    /**
+     * 列表SQL
+     * @param  array $where
+     * @return $query
+     * @version 1.0
+     * @author Henry
+     */
+    public function listQuery(array $where) {
+        $query = $this;
+        foreach(Arr::only($where,["name","account","status"]) as $key => $value) {
+            if($value!="") {
+                $query = $query->orwhere($key,"like","%$value%");
+            }
+        }
+        foreach(Arr::only($where,["email","phone","company"]) as $key => $value) {
+            if($value!="") {
+                $query = $query->orwhereHas('info',function($query) use($key,$value) {
+                    $query->where('key',$key)->where('value', 'like', "%$value%");
+                });
+            }
+        }
+        $query = $query->orderby('created_at')->select($this->detail)->info()->lastLogin();
+        return $query;
+    }
+
 }

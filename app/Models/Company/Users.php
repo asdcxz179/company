@@ -21,4 +21,10 @@ class Users extends DinjUsers
         "uniform_number",//統一編號
         "company",
     ];
+
+    public function info() {
+        return $this->hasMany(UsersInfo::class,'user_id','uuid')->where("key","!=","token");
+    }
+
+    
 }
