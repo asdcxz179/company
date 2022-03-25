@@ -19,7 +19,7 @@ class PointRecordsRepository extends Repository
      * @version 1.0
      * @author Henry
     **/
-    protected $detail = ["before_point","after_point","type","user_id","cost_type","cost"];
+    protected $detail = ["before_point","after_point","type","user_id","cost_type","cost",'remark','created_at'];
 
     /** 
      * 建構子
@@ -39,19 +39,14 @@ class PointRecordsRepository extends Repository
      */
     public function listQuery(array $where) {
         $query = $this;
-        foreach(Arr::only($where,["name","account"]) as $key => $value) {
+        foreach(Arr::only($where,["account"]) as $key => $value) {
             if($value!="") {
-                $query = $query->orwhere($key,"like","%$value%");
+                $query = $query->orwhereHas('member',function($query) use($key,$value) {
+                    $query->where($key, 'like', "%$value%");
+                });
             }
         }
-        foreach(Arr::only($where,["email","phone","company"]) as $key => $value) {
-            if($value!="") {
-                // $query = $query->orwhereHas('info',function($query) use($key,$value) {
-                //     $query->where('key',$key)->where('value', 'like', "%$value%");
-                // });
-            }
-        }
-        $query = $query->orderby('created_at')->member()->select($this->detail);
+        $query = $query->orderby('created_at','desc')->member()->select($this->detail);
         return $query;
     }
 

@@ -31,7 +31,7 @@ class Record extends DinjModel
 
     public function scopeMember($query){
         return $query->with(["member" => function($query){
-            $query->select(["uuid","account","status"]);
+            $query->select(["uuid","account"]);
         }]);
     }
 }

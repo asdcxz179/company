@@ -8,4 +8,5 @@ return [
     "Admin.Member.show"     =>  "公司詳情",
 
     "Admin.PointRecords.index"    =>  "點數紀錄",
+    "Admin.Point.create"          =>  "點數操作",
 ];

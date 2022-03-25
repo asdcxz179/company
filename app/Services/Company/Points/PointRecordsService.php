@@ -37,7 +37,7 @@ class PointRecordsService
      * @return \DataTables
      */
     public function index($data) {
-        $where = Arr::only($data,["name","account","email","phone","company"]);
+        $where = Arr::only($data,["account"]);
         return $this->PointRecordsRepository->listQuery($where);
     }
     
