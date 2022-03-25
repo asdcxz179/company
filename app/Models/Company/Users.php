@@ -30,4 +30,10 @@ class Users extends DinjUsers
     public function point() {
         return $this->hasOne(Point::class,'user_id','uuid');
     }
+
+    public function scopePoint($query){
+        return $query->with(["point" => function($query){
+            $query->select(["user_id","point"]);
+        }]);
+    }
 }

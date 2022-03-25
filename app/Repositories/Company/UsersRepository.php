@@ -52,7 +52,7 @@ class UsersRepository extends DinjUsersRepository
                 });
             }
         }
-        $query = $query->orderby('created_at')->select($this->detail)->info()->lastLogin();
+        $query = $query->orderby('created_at')->select($this->detail)->info()->point()->lastLogin();
         return $query;
     }
 

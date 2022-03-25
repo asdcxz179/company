@@ -47,6 +47,7 @@
                             <th data-priority="1">公司編號</th>
                             <th data-priority="1">公司名稱</th>
                             <th data-priority="2">帳號</th>
+                            <th data-priority="2">點數</th>
                             <th data-priority="2">負責人</th>
                             <th data-priority="3">Email</th>
                             <th data-priority="4">手機電話</th>
@@ -87,6 +88,7 @@
             { data: "number",    className: "text-center"},
             { data: "company",    className: "text-center", render:(data,type,row,meta) => { return (row.info.find(item=>item.key=="company")??{}).value; }},
             { data: "account",    className: "text-center",render:(data,type,row,meta) => { return `<a href="/Backend/Member/${row.uuid}">${data}</a>`;} },
+            { data: "point",    className: "text-center",render:(data,type,row,meta) => { return (data)?data.point:0;} },
             { data: "name",    className: "text-center" },
             { data: "email",    className: "text-center", render:(data,type,row,meta) => { return (row.info.find(item=>item.key=="email")??{}).value; }},
             { data: "phone",    className: "text-center", render:(data,type,row,meta) => { return (row.info.find(item=>item.key=="phone")??{}).value; }},

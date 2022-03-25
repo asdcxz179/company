@@ -54,7 +54,11 @@
 <script type="text/javascript" src="{{Universal::version('/dinj/admin/assets/plugins/parsleyjs/i18n/zh_tw.js')}}"></script>
 <script type="text/javascript">
     sendApi( "{{ route('Dinj.Member.index',[],false) }}","GET","", (data) => {
-        console.log(data);
+        var str = `<option value="">請選擇帳號</option>`;
+        data.data.original.data.map((item) => {
+            str += `<option value="${item.account}">${item.account}</option>`;
+        });
+        $("select[name=account]").html(str);
     });
     
   
