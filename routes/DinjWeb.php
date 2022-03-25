@@ -17,7 +17,8 @@ Route::middleware(config('auth.defaults.guard'))->prefix('Backend')->name('Admin
     Route::middleware(['admin.auth','admin.admin','admin.lockScreen'])->group(function () {
         Route::middleware(['admin.permission'])->group(function() {
             /* 會員管理 */
-		Route::resource('Member', 'Company\UsersController');
+		    Route::resource('Member', 'Company\UsersController');
+            Route::resource('PointRecords', 'Company\Points\RecordsController');
         });
     });
 });

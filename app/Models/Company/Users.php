@@ -3,6 +3,7 @@
 namespace App\Models\Company;
 
 use Dinj\Member\Models\Users as DinjUsers;
+use App\Models\Company\Points\Point;
 
 class Users extends DinjUsers
 {
@@ -26,5 +27,7 @@ class Users extends DinjUsers
         return $this->hasMany(UsersInfo::class,'user_id','uuid')->where("key","!=","token");
     }
 
-    
+    public function point() {
+        return $this->hasOne(Point::class,'user_id','uuid');
+    }
 }

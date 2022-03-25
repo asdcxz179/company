@@ -6,4 +6,6 @@ return [
     "Admin.Member.create"   =>  "新增公司",
     "Admin.Member.edit"     =>  "編輯公司",
     "Admin.Member.show"     =>  "公司詳情",
+
+    "Admin.PointRecords.index"    =>  "點數紀錄",
 ];
