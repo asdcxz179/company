@@ -8,7 +8,7 @@ class StoreRequest extends BasicFormRequest
 {
     public $createData = [
         'account'   =>  'required|exists:member_users,account',
-        'point'     =>  'required|numeric',
+        'point'     =>  'required|numeric|min:1',
         'type'      =>  'required|in:add,sub',
     ];
 

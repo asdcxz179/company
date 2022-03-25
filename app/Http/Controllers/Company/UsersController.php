@@ -66,7 +66,7 @@ class UsersController extends Controller
     public function show(Request $request,$id)
     {
         if($request->expectsJson()) {
-            return ApiResponse::json(["data"=>$this->UsersService->getUser($id) ]);
+            return ApiResponse::json(["data"=>$this->UsersService->getUser($id)->append('status_name') ]);
         }
         return view('member::detail');
     }
