@@ -8,5 +8,6 @@ Route::prefix('DinjApi/v1')->middleware('dinjApi')->namespace('App\Http\Controll
         Route::apiResource('Member', 'Company\UsersController', ['only' => ['index',"store","show","update","destroy"]]);
         Route::apiResource('Point', 'Company\Points\PointController', ['only' => ["store"]]);
         Route::apiResource('PointRecords', 'Company\Points\RecordsController', ['only' => ['index']]);
+        Route::resource('Api/Key', 'Company\Api\KeyController');
     });
 });
