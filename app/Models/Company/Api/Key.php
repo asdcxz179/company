@@ -4,7 +4,7 @@ namespace App\Models\Company\Api;
 
 use Dinj\Admin\Models\Universal\DinjModel;
 
-class Key extends Model
+class Key extends DinjModel
 {
     public function __construct(array $attribute = [])
     {
@@ -15,6 +15,6 @@ class Key extends Model
 
     protected $table = 'member_keys';
     protected $fillable = [
-        'key', 'secret','user_id','remark','name',
+        'key', 'secret','user_id','remark','name','status',
     ];
 }

@@ -4,9 +4,21 @@ namespace App\Http\Controllers\Company\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\Company\Api\Key\StoreRequest;
+use App\Services\Company\Api\KeyService;
+use App\Services\Company\UsersService;
+use Dinj\Admin\Http\Responses\Universal\ApiResponse;
 
 class KeyController extends Controller
 {
+    protected $KeyService;
+    protected $UsersService;
+    
+    public function __construct(KeyService $KeyService,UsersService $UsersService)
+    {
+        $this->KeyService = $KeyService;
+        $this->UsersService = $UsersService;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -18,24 +30,16 @@ class KeyController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        //
+        $user = $this->UsersService->getUserByaccount($request->account);
+        $this->KeyService->createKey($user->uuid,$request->name,$request->remark);
+        return ApiResponse::json(["message"=>"新增成功"]);
     }
 
     /**
@@ -46,30 +50,7 @@ class KeyController extends Controller
      */
     public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+        return ApiResponse::json(["data"=>$this->KeyService->getUserKeys($id)]);
     }
 
     /**
@@ -80,6 +61,7 @@ class KeyController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->KeyService->delete($id);
+        return ApiResponse::json(["message"=>"刪除成功"]);
     }
 }

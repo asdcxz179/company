@@ -122,7 +122,77 @@
                 </div><!-- end col -->
             </div><!-- end row -->
         </div>
-    </div><!-- end col -->
+    </div>
+    <div class="col-6">
+        <div class="card-box" id="member_key">
+            <div class="panel-body">
+                <div class="clearfix">
+                    <div class="float-left">
+                        <h3 class="logo" >API 金鑰</h3>
+                    </div>
+                </div>
+                <hr>
+                <div class="row" >
+                    <div class="col-12">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>名稱</th>
+                                    <th>金鑰</th>
+                                    <th>密鑰</th>
+                                    <th>備註</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="content">
+                                <tr>
+                                    <td colspan="6" class="text-center">無</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div><!-- end col -->
+                </div>
+                <!-- end row -->
+
+                <div class="m-h-50"></div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12 col-xl-6">
+                    <button type="button" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#makeKey-modal">產生金鑰</button>
+                </div><!-- end col -->
+            </div><!-- end row -->
+        </div>
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="makeKey-modal" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mySmallModalLabel">產生金鑰</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form name="makeKey" data-parsley-validate>
+                <input type="hidden" name="account">
+                <div class="modal-body">
+                    <fieldset class="form-group">
+                        <label for="name">名稱<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" name="name" id="name" placeholder="名稱" parsley-trigger="change" required >
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label for="remark">備註<span class="text-danger"></span></label>
+                        <textarea name="remark" id="remark" cols="30" rows="10" class="form-control"></textarea>
+                    </fieldset>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary waves-effect waves-light" data-dismiss="modal">關閉</button>
+                    <button type="submit" class="btn btn-primary waves-effect waves-light">產生</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 @endsection
 @push('style')
@@ -146,6 +216,53 @@
         data.data.info.map((item) => {
             $(`#member_detail #${item.key}`).text(item.trans);
         });
-    })
+        $("form[name=makeKey] input[name=account]").val(data.data.account);
+    });
+
+    function makeApiTable() {
+        sendApi( "{{ route('Dinj.Key.show',['Key' => request()->Member],false) }}","GET","", (data) => {
+            var str = "";
+            data.data.map((item,key) => {
+                str += `<tr>
+                            <td>${(key+1)}</td>
+                            <td>${item.name}</td>
+                            <td>${item.key}</td>
+                            <td>${item.secret}</td>
+                            <td>${item.remark??""}</td>
+                            <td>
+                                <button class="btn btn-sm btn-danger waves-effect waves-light deleteKey" data-id="${item.id}">刪除</button>
+                            </td>
+                        </tr>`;
+            });
+            $(`#member_key #content`).html(str);
+        });
+    }
+
+    makeApiTable();
+    
+    sendForm('form[name=makeKey]', "{{ route('Dinj.Key.store',[],false) }}", "POST",function(data){
+        toastr.options = {
+            "showDuration": 100,
+            "hideDuration": 300,
+            "timeOut":1500,
+        };
+        toastr.success(data.message);
+        $("#makeKey-modal").modal("hide");
+        makeApiTable();
+        $("form[name=makeKey]")[0].reset();
+        $("form[name=makeKey] button[type=submit]").attr("disabled",false);
+    });
+
+    $(document).on("click",".deleteKey",function(){
+        sendApi( `{{ route('Dinj.Key.index',[],false) }}/${$(this).data("id")}`,"DELETE","", (data) => {
+            toastr.options = {
+                "showDuration": 100,
+                "hideDuration": 300,
+                "timeOut":1500,
+            };
+            toastr.success(data.message);
+            makeApiTable();
+        });
+    });
 </script>
 @endpush

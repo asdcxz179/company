@@ -17,7 +17,7 @@ class KeyRepository extends Repository
      * @version 1.0
      * @author Henry
     **/
-    protected $detail = ["key","secret","status","remark"];
+    protected $detail = ["key","secret","status","remark","name","id"];
 
     /** 
      * 建構子
@@ -28,6 +28,13 @@ class KeyRepository extends Repository
         parent::__construct($key);
     }
 
-
+    /**
+     * 取得使用者金鑰
+     * @param  mixed $user_id
+     * @return void
+     */
+    public function getUserKeys($user_id) {
+        return $this->where(['user_id'=>$user_id])->select($this->detail)->get();
+    }
 
 }

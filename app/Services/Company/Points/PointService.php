@@ -59,7 +59,13 @@ class PointService
         }
         return $result;
     }
-
+    
+    /**
+     * 取得使用者點數
+     *
+     * @param  mixed $account
+     * @return void
+     */
     public function getUserPoint($account) {
         $user = $this->UsersRepository->where('account',$account)->first()->getEntity();
         if(!$user) {
@@ -74,7 +80,13 @@ class PointService
         }
         return $userPoint;
     }
-
+    
+    /**
+     * 點數初始化
+     *
+     * @param  mixed $user
+     * @return void
+     */
     public function initPoint($user) {
         return $user->point()->create([
             'type'  =>  1,

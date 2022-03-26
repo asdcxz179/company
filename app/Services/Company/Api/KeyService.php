@@ -3,8 +3,8 @@
 namespace App\Services\Company\Api;
 
 use App\Repositories\Company\Api\KeyRepository;
-use App\Repositories\Company\UsersRepository;
 use Dinj\Admin\Exceptions\Universal\ErrorException;
+use Illuminate\Support\Str;
 
 /**
  * Class KeyService.
@@ -12,75 +12,74 @@ use Dinj\Admin\Exceptions\Universal\ErrorException;
 class KeyService
 {
     /** 
-     * \App\Repositories\Member\PointRepository
+     * \App\Repositories\Member\KeyRepository
      * @access protected
-     * @var PointRepository
+     * @var KeyRepository
      * @version 1.0
      * @author Henry
     **/
-    protected $PointRepository;
+    protected $KeyRepository;
 
-    protected $UsersRepository;
-    
+    protected $seed = "QWERTYUIOPASDFGHJKLZXCVBNM1234567890qwertyuiopasdfghjklzxcvbnm";
+
     /** 
      * 建構子
      * @version 1.0
      * @author Henry
     **/
-    public function __construct(PointRepository $PointRepository,UsersRepository $UsersRepository) {
-        $this->PointRepository = $PointRepository;
-        $this->UsersRepository = $UsersRepository;
+    public function __construct(KeyRepository $KeyRepository) {
+        $this->KeyRepository = $KeyRepository;
     }
-    
+        
     /**
-     * 新增點數
-     *
+     * 產生金鑰
+     * @param  mixed $user_id
+     * @param  mixed $name
+     * @param  mixed $remark
      * @return void
      */
-    public function addPoint($account,$point) {
-        $userPoint = $this->getUserPoint($account);
-        $result = $userPoint->increment('point',$point);
+    public function createKey($user_id,$name,$remark = "") {
+
+        $data = [
+            'user_id'   =>  $user_id,
+            'name'      =>  $name,
+            'key'       =>  Str::uuid(),
+            'secret'    =>  $this->makeSecret(),
+            'remark'    =>  $remark,
+            'status'    =>  1,
+        ];
+        $result = $this->KeyRepository->create($data);
         if(!$result) {
-            throw new ErrorException([],"新增點數失敗",500);
+            throw new ErrorException([],"新增金鑰失敗",500);
         }
         return $result;
     }
     
     /**
-     * 減少點數
-     *
-     * @return void
+     * 產生密鑰
+     * @return string
      */
-    public function subPoint($account,$point) {
-        $userPoint = $this->getUserPoint($account);
-        $result = $userPoint->decrement('point',$point);
-        if(!$result) {
-            throw new ErrorException([],"扣除點數失敗",500);
-        }
-        return $result;
-    }
-
-    public function getUserPoint($account) {
-        $user = $this->UsersRepository->where('account',$account)->first()->getEntity();
-        if(!$user) {
-            throw new ErrorException([],"無此公司",500);
-        }
-        $userPoint = $user->point;
-        if(!$userPoint) {
-            $userPoint = $this->initPoint($user);
-            if(!$userPoint) {
-                throw new ErrorException([],"操作失敗",500);
-            }
-        }
-        return $userPoint;
-    }
-
-    public function initPoint($user) {
-        return $user->point()->create([
-            'type'  =>  1,
-            'user_id'   =>  $user->uuid,
-            'point'     =>  0,
-        ]);
+    public function makeSecret() {
+        return substr(str_shuffle($this->seed),0,20);
     }
     
+    /**
+     * 取得使用者金鑰
+     *
+     * @param  mixed $user_id
+     * @return void
+     */
+    public function getUserKeys($user_id) {
+        return $this->KeyRepository->getUserKeys($user_id);
+    }
+        
+    /**
+     * 刪除金鑰
+     * @param  mixed $id
+     * @return void
+     */
+    public function delete($id) {
+        return $this->KeyRepository->find($id)->delete();
+    }
+
 }

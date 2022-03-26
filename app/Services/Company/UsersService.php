@@ -7,6 +7,7 @@ use App\Repositories\Company\UsersInfoRepository;
 use Tymon\JWTAuth\JWTAuth;
 use Dinj\Member\Services\UsersService as DinjUsersService;
 use Illuminate\Support\Arr;
+use Dinj\Admin\Exceptions\Universal\ErrorException;
 
 /**
  * Class UsersService.
@@ -52,6 +53,19 @@ class UsersService extends DinjUsersService
     public function index($data) {
         $where = Arr::only($data,["name","account","status","email","phone","company"]);
         return $this->UsersRepository->listQuery($where);
+    }
+    
+    /**
+     * 取的使用者
+     * @param  mixed $account
+     * @return object
+     */
+    public function getUserByaccount($account) {
+        $user = $this->UsersRepository->where(['account'=>$account])->first()->getEntity();
+        if(!$user) {
+            throw new ErrorException([],"查無使用者",500);
+        }
+        return $user;
     }
     
 }
