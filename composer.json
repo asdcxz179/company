@@ -67,8 +67,8 @@
             "url": "git@github.com:DinJ-team/DinjAdmin.git"
         },
         "Dinj/Member": {
-            "type": "path", 
-            "url": "../member"
+            "type": "vcs", 
+            "url": "git@github.com:asdcxz179/DinjMember.git"
         }
     }
 }

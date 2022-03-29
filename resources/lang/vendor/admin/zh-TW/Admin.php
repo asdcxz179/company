@@ -10,4 +10,8 @@ return [
     "Admin.PointRecords.index"    =>  "點數紀錄",
     "Admin.Point.index"           =>  "點數紀錄",
     "Admin.Point.create"          =>  "點數操作",
+
+    "PRODUCT"         =>  "產品",
+    "Admin.Products.index"          =>  "產品管理",
+    "Admin.Products.edit"          =>  "編輯產品",
 ];

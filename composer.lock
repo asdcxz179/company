@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6d06c62afee5effe31b5a47fea7c32e2",
+    "content-hash": "5b7638abe2a83c5e1fe2f1d05fa964dd",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -258,14 +258,21 @@
         {
             "name": "dinj/member",
             "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:asdcxz179/DinjMember.git",
+                "reference": "506c2581eab5d352f87f83f5ff862d60c24e14af"
+            },
             "dist": {
-                "type": "path",
-                "url": "../member",
-                "reference": "38351b463cd4773d11310b2f66aaf020e6bfbd75"
+                "type": "zip",
+                "url": "https://api.github.com/repos/asdcxz179/DinjMember/zipball/506c2581eab5d352f87f83f5ff862d60c24e14af",
+                "reference": "506c2581eab5d352f87f83f5ff862d60c24e14af",
+                "shasum": ""
             },
             "require": {
                 "dinj/admin": "*"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -285,9 +292,11 @@
                     "email": "asdcxz179@gmail.com"
                 }
             ],
-            "transport-options": {
-                "relative": true
-            }
+            "support": {
+                "source": "https://github.com/asdcxz179/DinjMember/tree/master",
+                "issues": "https://github.com/asdcxz179/DinjMember/issues"
+            },
+            "time": "2022-03-25T05:08:42+00:00"
         },
         {
             "name": "doctrine/inflector",

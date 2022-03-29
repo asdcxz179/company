@@ -21,6 +21,7 @@ Route::middleware(config('auth.defaults.guard'))->prefix('Backend')->name('Admin
             Route::resource('Point', 'Company\Points\PointController');
             Route::resource('PointRecords', 'Company\Points\RecordsController');
             Route::resource('Api/Key', 'Company\Api\KeyController');
+            Route::resource('Products', 'Products\ProductController');
         });
     });
 });
