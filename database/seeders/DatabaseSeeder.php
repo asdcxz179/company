@@ -13,6 +13,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $this->call(RouteSeeder::class);
+        $this->call(ProductSeeder::class);
+        $this->call(PointsSeeder::class);
         // \App\Models\User::factory(10)->create();
     }
 }
