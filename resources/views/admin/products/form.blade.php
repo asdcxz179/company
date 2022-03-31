@@ -1,12 +1,13 @@
 @extends('admin::layouts.main')
+@include('admin.products.settings')
 @section('content')
 
 <div class="row">
     <div class="col-12">
-        <div class="card-box">
-            <div class="row">
-                <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12 col-xl-6">
-                    <form name="product" data-parsley-validate>
+        <form name="product" data-parsley-validate>
+            <div class="card-box">
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12 col-xl-6">
                         <fieldset class="form-group">
                             <label for="name">產品名稱<span class="text-danger">*</span></label>
                             <input type="text" class="form-control" name="name" id="name" placeholder="產品名稱" parsley-trigger="change" required data-parsley-length="[1,30]">
@@ -22,15 +23,22 @@
                                 <option value="0">維護</option>
                             </select>
                         </fieldset>
-                        <button type="button" onclick="location.href='{{ route('Admin.Products.index') }}'" class="btn btn-white waves-effect waves-light">回上一頁</button>
-                        <button type="submit" class="btn btn-primary waves-effect waves-light">確定</button>
-                    </form>
-                </div><!-- end col -->
+                    </div><!-- end col -->
+                </div><!-- end row -->
+                
+                @yield('settings')
 
-            </div><!-- end row -->
-        </div>
+                <div class="row">
+                    <div class="col-12">
+                        <button type="button" onclick="location.href='{{ route('Admin.Products.index') }}'" class="btn btn-white waves-effect waves-light">回上一頁</button>
+                        <button type="submit" class="btn btn-primary waves-effect waves-light">確定</button>    
+                    </div>
+                </div>
+            </div>
+        </form>
     </div><!-- end col -->
 </div>
+
 @endsection
 @push('style')
 @endpush
@@ -38,7 +46,6 @@
 <script type="text/javascript" src="{{Universal::version('/dinj/admin/assets/plugins/parsleyjs/parsley.min.js')}}"></script>
 <script type="text/javascript" src="{{Universal::version('/dinj/admin/assets/plugins/parsleyjs/i18n/zh_tw.js')}}"></script>
 <script type="text/javascript">
-   
     sendApi( "{{ route('Admin.Products.show',['Product' => request()->Product],false) }}","GET","", (data) => {
         setForm("form[name=product]", data.data);
     });
