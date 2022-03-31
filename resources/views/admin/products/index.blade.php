@@ -55,7 +55,7 @@
             { data: "id",  className: "text-center", render: (data, type, full, meta) => { return meta.row + 1 + meta.settings._iDisplayStart;}},
             { data: "name",    className: "text-center"},
             { data: "default_fee",    className: "text-center"},
-            { data: "status",    className: "text-center" },
+            { data: "status",    className: "text-center",render: (data,type,row,meta) => { let tag = (data)?"label-success":"label-danger"; return `<span class="label label-pill ${tag}">${row.status_name}</span>`; } },
             { data: "id",    className: "text-center", render: (data,type,row,meta) => { return `<a href="/Backend/Products/${data}/edit"><i class="zmdi zmdi-edit text-info"></i></a>`; }},
         ],
         function(){

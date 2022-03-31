@@ -5,6 +5,7 @@ namespace App\Repositories\Products;
 use Dinj\Admin\Repositories\Universal\Repository;
 use App\Models\Products\Product;
 use DataTables;
+use DB;
 
 /**
  * Class ProductRepository.
@@ -35,7 +36,7 @@ class ProductRepository extends Repository
      * @author Henry
      */
     public function listQuery() {
-        return $this->select($this->detail);
+        return $this->select(array_merge($this->detail,[DB::raw('status as status_name')]));
     }
 
     /**

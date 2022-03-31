@@ -3,6 +3,7 @@
 namespace App\Models\Products;
 
 use Dinj\Admin\Models\Universal\DinjModel;
+use Illuminate\Support\Facades\Lang;
 
 class Product extends DinjModel
 {
@@ -20,4 +21,10 @@ class Product extends DinjModel
     ];
     protected $hidden = [
     ];
+
+    public function getStatusNameAttribute() {
+        $value =  $this->attributes['status'];
+        $name = "admin::Admin.Products.Status.{$value}";
+        return Lang::has($name)?trans($name):$value;
+    }
 }

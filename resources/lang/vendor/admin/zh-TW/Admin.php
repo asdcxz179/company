@@ -14,4 +14,11 @@ return [
     "PRODUCT"         =>  "產品",
     "Admin.Products.index"          =>  "產品管理",
     "Admin.Products.edit"          =>  "編輯產品",
+
+    "Products"  =>  [
+        "Status"    =>  [
+            0   =>  "維護",
+            1   =>  "啟用",
+        ],
+    ]
 ];
