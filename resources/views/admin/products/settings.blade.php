@@ -41,7 +41,6 @@
                 </div>
             </form>
         </div>
-        
     </div>
 </div>
 @endsection
@@ -71,13 +70,14 @@
                                     <div class="radio radio-success m-l-5">
                                         <input type="radio" name="channel" id="channel_${item.id}" value="${item.id}" ${checked}>
                                         <label for="channel_${item.id}"><h4 class="card-title">${item.name}</h4></label>
+                                        <button type="button" class="btn btn-sm btn-danger float-right waves-effect waves-light delete-channel" data-id="${item.id}">刪除</button>
                                     </div>`
                 let keys = Object.keys(item.setting);
                 keys.map((key)=>{
                     str += `<p class="card-text">${key} : <span class="text-primary">${item.setting[key]}</span></p>`
                 });
                                     
-                str +=              `<button type="button" class="btn btn-primary">編輯</button>
+                str +=              `
                                 </div>
                             </div>
                         </div>`
@@ -113,6 +113,32 @@
         };
         $('#setting-modal').modal('hide');
         getChannel();
+    });
+    
+    $(document).on('click','.delete-channel',function(){
+        let value = $('form[name=product] input[name=channel]:checked').val();
+        let id = $(this).data('id');
+        if(value == id) {
+            toastr.error("不得刪除已設定資料");
+        }
+        Swal.fire({
+            title: '確定要刪除嗎?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: "確定",
+            cancelButtonText: "取消",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                sendApi( `{{ route('Dinj.Channel.index',[],false) }}/${id}`,"DELETE","", (data) => {
+                    toastr.options = {
+                        "showDuration": 500,
+                        "hideDuration": 500,
+                    };
+                    toastr.success(data.message);
+                    getChannel();
+                });
+            }
+        });
     });
 </script>
 @endpush

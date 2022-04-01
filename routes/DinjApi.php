@@ -10,7 +10,7 @@ Route::prefix('DinjApi/v1')->middleware('dinjApi')->namespace('App\Http\Controll
         Route::apiResource('PointRecords', 'Company\Points\RecordsController', ['only' => ['index']]);
         Route::resource('Api/Key', 'Company\Api\KeyController');
         Route::resource('Products/Type', 'Products\TypeController', ['only' => ['index']]);
-        Route::resource('Products/Channel', 'Products\ChannelController', ['only' => ['index','store']]);
+        Route::resource('Products/Channel', 'Products\ChannelController', ['only' => ['index','store','destroy']]);
         Route::resource('Products', 'Products\ProductController');
     });
 });

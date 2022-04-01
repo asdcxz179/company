@@ -58,4 +58,18 @@ class ChannelService
         }
         return $channel;
     }
+
+    /**
+     * 刪除通道
+     * @param  mixed $id
+     * @return void
+     */
+    public function deleteChannel(int $id) {
+        $channel =  $this->ChannelRepository->find($id);
+        $result = $channel->delete();
+        if(!$result){
+            throw new ErrorException([],trans('common.DeleteFail'),500);
+        }
+        return $channel;
+    }
 }

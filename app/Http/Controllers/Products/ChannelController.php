@@ -84,6 +84,7 @@ class ChannelController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->ChannelService->deleteChannel($id);
+        return ApiResponse::json(["message"=>"刪除成功"]);
     }
 }
