@@ -6,6 +6,9 @@
         </button>
     </div>
 </div>
+<div class="row mb-3" id="channel_content">
+
+</div>
 @endsection
 @section('settings_modal')
 <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="setting-modal" data-backdrop="static">
@@ -18,7 +21,7 @@
                 </button>
             </div>
             <form name="setting" data-parsley-validate>
-                <input type="hidden" name="account">
+                <input type="hidden" name="products_id" value="{{request()->Product}}">
                 <div class="modal-body">
                     <fieldset class="form-group">
                         <label for="channel">選擇通道<span class="text-danger">*</span></label>
@@ -38,6 +41,7 @@
                 </div>
             </form>
         </div>
+        
     </div>
 </div>
 @endsection
@@ -53,14 +57,45 @@
         $('form[name=setting] select[name=channel]').html(str);
         settings = data.data.settings;
     });
+    function getChannel() {
+        sendApi( "{{ route('Dinj.Channel.index',[],false) }}?products_id={{request()->Product}}","GET","", (data) => {
+            var str = '';
+            data.data.map(item=>{
+                let checked = "";
+                if(item.id == detail.channel) {
+                    checked = "checked";
+                }
+                str += `<div class="col-3">
+                            <div class="card m-b-20 ">
+                                <div class="card-block">
+                                    <div class="radio radio-success m-l-5">
+                                        <input type="radio" name="channel" id="channel_${item.id}" value="${item.id}" ${checked}>
+                                        <label for="channel_${item.id}"><h4 class="card-title">${item.name}</h4></label>
+                                    </div>`
+                let keys = Object.keys(item.setting);
+                keys.map((key)=>{
+                    str += `<p class="card-text">${key} : <span class="text-primary">${item.setting[key]}</span></p>`
+                });
+                                    
+                str +=              `<button type="button" class="btn btn-primary">編輯</button>
+                                </div>
+                            </div>
+                        </div>`
+            });
+            $('#channel_content').html(str);
+        });
+    }
+    getChannel();
+    
     $('form[name=setting] select[name=channel]').change(function(){
         var str = ``;
         let data = $(this).val();
         if(data) {
+            let keys = Object.keys(settings[data]);
             settings[data].map(item => {
-               str += `<fieldset class="form-group">
+                str += `<fieldset class="form-group">
                             <label for="name">${item.name}<span class="text-danger">*</span></label>
-                            <input type="${item.type}" class="form-control" name="${item.name}" placeholder="${item.name}" parsley-trigger="change" required >
+                            <input type="${item.type}" class="form-control" name="setting[${item.name}]" placeholder="${item.name}" parsley-trigger="change" required >
                         </fieldset>`; 
             });
         }
@@ -73,10 +108,11 @@
             "hideDuration": 300,
             "timeOut":1500,
             "onHidden": function() {
-                location.href='{{ route('Admin.Products.index') }}';
+                // location.href='{{ route('Admin.Products.index') }}';
             }
         };
-        toastr.success(data.message);
+        $('#setting-modal').modal('hide');
+        getChannel();
     });
 </script>
 @endpush

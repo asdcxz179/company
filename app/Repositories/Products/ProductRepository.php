@@ -18,7 +18,7 @@ class ProductRepository extends Repository
      * @version 1.0
      * @author Henry
     **/
-    public $detail = ["code","status","name","default_fee","id"];
+    public $detail = ["code","status","name","default_fee","id","channel"];
 
     /** 
      * 建構子

@@ -46,8 +46,10 @@
 <script type="text/javascript" src="{{Universal::version('/dinj/admin/assets/plugins/parsleyjs/parsley.min.js')}}"></script>
 <script type="text/javascript" src="{{Universal::version('/dinj/admin/assets/plugins/parsleyjs/i18n/zh_tw.js')}}"></script>
 <script type="text/javascript">
+    var detail = {};
     sendApi( "{{ route('Dinj.Products.show',['Product' => request()->Product],false) }}","GET","", (data) => {
         setForm("form[name=product]", data.data);
+        detail = data.data;
     });
     sendForm('form[name=product]', "{{ route('Dinj.Products.update',['Product' => request()->Product],false) }}", "PUT",function(data){
         toastr.options = {

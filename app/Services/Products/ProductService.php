@@ -66,16 +66,12 @@ class ProductService
      * @return void
      */
     public function updateProduct(array $data, int $id) {
-        $productData = array_filter(Arr::only($data,["name",'default_fee','status']),'strlen');
+        $productData = array_filter(Arr::only($data,["name",'default_fee','status','channel']),'strlen');
         $model =  $this->ProductRepository->find($id);
         $product = $model->update($productData);
         if(!$product){
             throw new ErrorException([],trans('common.UpdateFail'),500);
         }
-        // $result = $this->updateUserInfo($model, $data);
-        // if(!$result){
-        //     throw new ErrorException([],trans('common.UpdateFail'),500);
-        // }
         return $product;
     }
     

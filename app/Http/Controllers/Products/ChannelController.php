@@ -5,27 +5,29 @@ namespace App\Http\Controllers\Products;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Dinj\Admin\Http\Responses\Universal\ApiResponse;
+use App\Http\Requests\Products\Channel\IndexRequest;
+use App\Services\Products\ChannelService;
+use App\Http\Requests\Products\Channel\StoreRequest;
+use App\Http\Requests\Products\Channel\UpdateRequest;
 
 class ChannelController extends Controller
 {
+    protected $ChannelService;
+    
+    public function __construct(ChannelService $ChannelService)
+    {
+        $this->ChannelService = $ChannelService;
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(IndexRequest $request)
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        if($request->expectsJson()) {
+            return ApiResponse::json(["data" => $this->ChannelService->getProductChannel($request->products_id)]);
+        }
     }
 
     /**
@@ -34,9 +36,10 @@ class ChannelController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        //
+        $this->ChannelService->addChannel($request->products_id,$request->name,$request->setting);
+        return ApiResponse::json(["message"=>"新增成功"]);
     }
 
     /**
@@ -68,7 +71,7 @@ class ChannelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRequest $request, $id)
     {
         //
     }

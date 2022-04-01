@@ -17,7 +17,7 @@ class Product extends DinjModel
 
     protected $table = 'products';
     protected $fillable = [
-         'name','default_fee','status',
+         'name','default_fee','status','channel'
     ];
     protected $hidden = [
     ];

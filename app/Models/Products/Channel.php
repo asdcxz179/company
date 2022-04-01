@@ -19,4 +19,12 @@ class Channel extends DinjModel
     ];
     protected $hidden = [
     ];
+
+    public function getSettingAttribute($value) {
+        $array = json_decode($value,true);
+        if(is_array($array)) {
+            return $array;
+        }
+        return $value;
+    }
 }
