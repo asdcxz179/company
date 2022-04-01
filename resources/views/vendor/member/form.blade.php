@@ -118,7 +118,7 @@
         })
     ]).then(function(){
         @if(!$formType)
-            sendApi( "{{ route('Admin.Member.show',['Member' => request()->Member],false) }}","GET","", (data) => {
+            sendApi( "{{ route('Dinj.Member.show',['Member' => request()->Member],false) }}","GET","", (data) => {
                 setForm("form[name=users]", data.data);
                 var object = new Object();
                 data.data.info.map((item) => {
@@ -144,7 +144,7 @@
             $("select[name=company_area]").val(area);
         }
     }
-    sendForm('form[name=users]', "{{ ($formType)?route('Admin.Member.store',[],false):route('Admin.Member.update',['Member' => request()->Member],false) }}", "{{$method}}",function(data){
+    sendForm('form[name=users]', "{{ ($formType)?route('Dinj.Member.store',[],false):route('Dinj.Member.update',['Member' => request()->Member],false) }}", "{{$method}}",function(data){
         toastr.options = {
             "showDuration": 100,
             "hideDuration": 300,

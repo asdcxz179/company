@@ -62,7 +62,7 @@
     });
     
   
-    sendForm('form[name=form]', "{{ route('Admin.Point.store',[],false) }}", "POST",function(data){
+    sendForm('form[name=form]', "{{ route('Dinj.Point.store',[],false) }}", "POST",function(data){
         toastr.options = {
             "showDuration": 100,
             "hideDuration": 300,

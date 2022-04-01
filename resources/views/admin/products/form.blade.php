@@ -38,7 +38,7 @@
         </form>
     </div><!-- end col -->
 </div>
-
+@yield('settings_modal')
 @endsection
 @push('style')
 @endpush
@@ -46,10 +46,10 @@
 <script type="text/javascript" src="{{Universal::version('/dinj/admin/assets/plugins/parsleyjs/parsley.min.js')}}"></script>
 <script type="text/javascript" src="{{Universal::version('/dinj/admin/assets/plugins/parsleyjs/i18n/zh_tw.js')}}"></script>
 <script type="text/javascript">
-    sendApi( "{{ route('Admin.Products.show',['Product' => request()->Product],false) }}","GET","", (data) => {
+    sendApi( "{{ route('Dinj.Products.show',['Product' => request()->Product],false) }}","GET","", (data) => {
         setForm("form[name=product]", data.data);
     });
-    sendForm('form[name=product]', "{{ route('Admin.Products.update',['Product' => request()->Product],false) }}", "PUT",function(data){
+    sendForm('form[name=product]', "{{ route('Dinj.Products.update',['Product' => request()->Product],false) }}", "PUT",function(data){
         toastr.options = {
             "showDuration": 100,
             "hideDuration": 300,

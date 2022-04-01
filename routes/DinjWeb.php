@@ -17,11 +17,11 @@ Route::middleware(config('auth.defaults.guard'))->prefix('Backend')->name('Admin
     Route::middleware(['admin.auth','admin.admin','admin.lockScreen'])->group(function () {
         Route::middleware(['admin.permission'])->group(function() {
             /* 會員管理 */
-		    Route::resource('Member', 'Company\UsersController');
-            Route::resource('Point', 'Company\Points\PointController');
-            Route::resource('PointRecords', 'Company\Points\RecordsController');
-            Route::resource('Api/Key', 'Company\Api\KeyController');
-            Route::resource('Products', 'Products\ProductController');
+		    Route::resource('Member', 'Company\UsersController', ['only' => ['index','create','edit']]);
+            Route::resource('Point', 'Company\Points\PointController', ['only' => ['index','create','edit']]);
+            Route::resource('PointRecords', 'Company\Points\RecordsController', ['only' => ['index','create','edit']]);
+            Route::resource('Api/Key', 'Company\Api\KeyController', ['only' => ['index','create','edit']]);
+            Route::resource('Products', 'Products\ProductController', ['only' => ['index','create','edit']]);
         });
     });
 });
