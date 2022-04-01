@@ -20,6 +20,7 @@ class ProductsTypeSeeder extends Seeder
             [ 'code' => 'email', 'app' => "mailgun", 'name' => 'Mail Gun', 'created_at' => Carbon::now()],
             [ 'code' => 'email', 'app' => "postmark", 'name' => 'Post Mark', 'created_at' => Carbon::now()],
             [ 'code' => 'email', 'app' => "ses", 'name' => 'AWS', 'created_at' => Carbon::now()],
+            [ 'code' => 'sms', 'app' => "nexmo", 'name' => 'Vonage', 'created_at' => Carbon::now()],
 	    ]);
     }
 }

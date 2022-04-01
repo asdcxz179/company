@@ -117,6 +117,23 @@ class SystemSettingsSeeder extends Seeder
 		            'value' 			=>	'text',
 		            'created_at'		=>	date("Y-m-d H:i:s"),
 	        	],
+				//nexmo
+				[
+		        	'uuid'			    =>	Uuid::getFactory()->uuid4(),
+		        	'lang'				=>	'sms',
+                    'name'				=>	'api_key',
+		        	'type'				=>	'nexmo',
+		            'value' 			=>	'text',
+		            'created_at'		=>	date("Y-m-d H:i:s"),
+	        	],
+				[
+		        	'uuid'			    =>	Uuid::getFactory()->uuid4(),
+		        	'lang'				=>	'sms',
+                    'name'				=>	'api_secret',
+		        	'type'				=>	'nexmo',
+		            'value' 			=>	'text',
+		            'created_at'		=>	date("Y-m-d H:i:s"),
+	        	],
         	]
     	);
     }

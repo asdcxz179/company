@@ -48,14 +48,24 @@
 @push('javascript')
 <script>
     var settings = {};
-    sendApi( "{{ route('Dinj.Type.index',[],false) }}?type=email","GET","", (data) => {
-        var str = `<option value="">請選擇通道</option>`;
-        data.data.types.map((item) => {
-            str += `<option value="${item.app}">${item.name}</option>`
-        });
-        $('form[name=setting] select[name=channel]').html(str);
-        settings = data.data.settings;
-    });
+    Object.defineProperties(detail,
+        {
+            code : {
+                set: function(newValue) {
+                    sendApi( `{{ route('Dinj.Type.index',[],false) }}?type=${newValue}`,"GET","", (data) => {
+                        var str = `<option value="">請選擇通道</option>`;
+                        data.data.types.map((item) => {
+                            str += `<option value="${item.app}">${item.name}</option>`
+                        });
+                        $('form[name=setting] select[name=channel]').html(str);
+                        settings = data.data.settings;
+                    });
+                    getChannel();
+                }
+            }
+        }
+    )
+    
     function getChannel() {
         sendApi( "{{ route('Dinj.Channel.index',[],false) }}?products_id={{request()->Product}}","GET","", (data) => {
             var str = '';
@@ -85,7 +95,6 @@
             $('#channel_content').html(str);
         });
     }
-    getChannel();
     
     $('form[name=setting] select[name=channel]').change(function(){
         var str = ``;
