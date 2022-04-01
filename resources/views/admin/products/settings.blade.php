@@ -120,25 +120,26 @@
         let id = $(this).data('id');
         if(value == id) {
             toastr.error("不得刪除已設定資料");
+        }else{
+            Swal.fire({
+                title: '確定要刪除嗎?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: "確定",
+                cancelButtonText: "取消",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    sendApi( `{{ route('Dinj.Channel.index',[],false) }}/${id}`,"DELETE","", (data) => {
+                        toastr.options = {
+                            "showDuration": 500,
+                            "hideDuration": 500,
+                        };
+                        toastr.success(data.message);
+                        getChannel();
+                    });
+                }
+            });
         }
-        Swal.fire({
-            title: '確定要刪除嗎?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: "確定",
-            cancelButtonText: "取消",
-        }).then((result) => {
-            if (result.isConfirmed) {
-                sendApi( `{{ route('Dinj.Channel.index',[],false) }}/${id}`,"DELETE","", (data) => {
-                    toastr.options = {
-                        "showDuration": 500,
-                        "hideDuration": 500,
-                    };
-                    toastr.success(data.message);
-                    getChannel();
-                });
-            }
-        });
     });
 </script>
 @endpush
