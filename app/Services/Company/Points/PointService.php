@@ -53,6 +53,9 @@ class PointService
      */
     public function subPoint($account,$point) {
         $userPoint = $this->getUserPoint($account);
+        if($userPoint->point < $point) {
+            throw new ErrorException([],"點數不足",500);
+        }
         $result = $userPoint->decrement('point',$point);
         if(!$result) {
             throw new ErrorException([],"扣除點數失敗",500);

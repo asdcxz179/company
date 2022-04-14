@@ -46,9 +46,7 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('web')
                 ->namespace($this->namespace)
                 ->group(base_path('routes/web.php'));
-        });
 
-        $this->routes(function (){
             Route::namespace($this->namespace)->group(base_path('routes/DinjApi.php'));
 
             Route::namespace($this->namespace)->group(base_path('routes/DinjWeb.php'));

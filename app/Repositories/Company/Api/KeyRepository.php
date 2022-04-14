@@ -36,5 +36,15 @@ class KeyRepository extends Repository
     public function getUserKeys($user_id) {
         return $this->where(['user_id'=>$user_id])->select($this->detail)->get();
     }
+    
+    /**
+     * 金鑰取得使用者密鑰
+     *
+     * @param string $key
+     * @return void
+     */
+    public function getSecretByKey(string $key) {
+        return $this->where(['key' => $key])->first();
+    }
 
 }
