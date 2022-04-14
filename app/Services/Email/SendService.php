@@ -34,6 +34,14 @@ class SendService
     }
     
     public function send() {
+        $product = $this->ProductRepository->where('code','email')->first();
+        if(!$product->status || !$product->channel) {
+            throw new ErrorException([],"通道維護中",500);
+        }
+        $channel = $product->channel;
+        $fee = $product->default_fee;
+
+        
 
     }
     

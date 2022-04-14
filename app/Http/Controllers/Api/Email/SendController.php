@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\Email;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\Api\Email\SendRequest;
-use App\Services\Company\Points\PointService;
+use App\Services\Email\SendService;
 use App\Services\Products\ProductService;
 use DB;
 use Dinj\Admin\Http\Responses\Universal\ApiResponse;
@@ -13,12 +13,12 @@ use Dinj\Admin\Exceptions\Universal\ErrorException;
 
 class SendController extends Controller
 {
-    protected $PointService;
+    protected $SendService;
     protected $ProductService;
     
-    public function __construct(PointService $PointService,ProductService $ProductService)
+    public function __construct(SendService $SendService,ProductService $ProductService)
     {
-        $this->PointService = $PointService;
+        $this->SendService = $SendService;
         $this->ProductService = $ProductService;
     }
 
@@ -31,13 +31,7 @@ class SendController extends Controller
     public function store(SendRequest $request)
     {
         DB::beginTransaction();
-        $product = $this->ProductService->getProductByCode('email');
-        $channel = $product->channel;
-        if(!$channel) {
-            throw new ErrorException([],"通道未設定",500);
-        }
-        $fee = $product->default_fee;
-        dd($fee);
+        $product = $this->SendService->send();
         DB::commit();
         return ApiResponse::json(["message"=>"發送成功"]);
     }
