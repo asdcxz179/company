@@ -14,6 +14,8 @@ class mailgun
     public $recipient;
     public $content;
     public $title;
+    public $product;
+    public $account;
     /**
      * Create a new event instance.
      *
@@ -24,6 +26,8 @@ class mailgun
         $this->recipient = $data['recipient'];
         $this->content = $data['content'];
         $this->title    =   $data['title'];
+        $this->product    =   $data['product'];
+        $this->account      =   $data['account'];
         config([
             'services.mailgun.domain' => $data['setting']['domain'],
             'services.mailgun.secret' => $data['setting']['secret']

@@ -3,6 +3,7 @@
 namespace App\Models\Company\Api;
 
 use Dinj\Admin\Models\Universal\DinjModel;
+use App\Models\Company\Users;
 
 class Key extends DinjModel
 {
@@ -17,4 +18,8 @@ class Key extends DinjModel
     protected $fillable = [
         'key', 'secret','user_id','remark','name','status',
     ];
+
+    public function member() {
+        return $this->hasOne(Users::class,'uuid','user_id');
+    }
 }

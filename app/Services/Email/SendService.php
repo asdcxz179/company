@@ -40,7 +40,7 @@ class SendService
      * @param  mixed $content
      * @return void
      */
-    public function send(string $recipient,string $title,string $content) {
+    public function send(string $recipient,string $title,string $content,array $account = []) {
         $product = $this->ProductRepository->where('code','email')->first();
         if(!$product->status || !$product->channel) {
             throw new ErrorException([],"通道維護中",500);
@@ -50,6 +50,8 @@ class SendService
             'recipient' =>  $recipient,
             'content'   =>  $content,
             'title'   =>  $title,
+            'product'   =>  $product,
+            'account'   =>  $account,
             'setting'   =>  $channel->setting,
         ]);
     }

@@ -72,6 +72,20 @@ class KeyService
     public function getUserKeys($user_id) {
         return $this->KeyRepository->getUserKeys($user_id);
     }
+
+    /**
+     * 透過金鑰取得使用者
+     *
+     * @param  mixed $key
+     * @return void
+     */
+    public function getUserByKey(string $key) {
+        $key = $this->KeyRepository->where(['key'=>$key])->first()->getEntity();
+        if(!$key) {
+            return false;
+        }
+        return $key->member;
+    }
         
     /**
      * 刪除金鑰

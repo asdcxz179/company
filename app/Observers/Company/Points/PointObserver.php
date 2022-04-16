@@ -36,13 +36,18 @@ class PointObserver
     {
         $before_point   = $Point->getOriginal('point');
         $after_point    = $Point->point;
+        $type = \Request::input('type');
+        $match = preg_match('/email|sms/is',\Request::path(),$data);
+        if($match) {
+            $type = $data[0];
+        }
         $this->PointRecordsService->addRecord([
             'user_id'       =>  $Point->user_id,
             'before_point'  =>  $before_point,
             'after_point'   =>  $after_point,
             'type'          =>  $this->type,
             'cost'          =>  \Request::input('point')??abs(bcsub($after_point,$before_point,2)),
-            'cost_type'     =>  \Request::input('type')??(($before_point<$after_point)?"add":"sub"),
+            'cost_type'     =>  $type??(($before_point<$after_point)?"add":"sub"),
             'remark'        =>  \Request::input('remark'),
         ]);
     }

@@ -10,16 +10,19 @@ use App\Services\Products\ProductService;
 use DB;
 use Dinj\Admin\Http\Responses\Universal\ApiResponse;
 use Dinj\Admin\Exceptions\Universal\ErrorException;
+use App\Services\Company\Api\KeyService;
 
 class SendController extends Controller
 {
     protected $SendService;
     protected $ProductService;
+    protected $KeyService;
     
-    public function __construct(SendService $SendService,ProductService $ProductService)
+    public function __construct(SendService $SendService,ProductService $ProductService,KeyService $KeyService)
     {
         $this->SendService = $SendService;
         $this->ProductService = $ProductService;
+        $this->KeyService = $KeyService;
     }
 
     /**
@@ -31,7 +34,8 @@ class SendController extends Controller
     public function store(SendRequest $request)
     {
         DB::beginTransaction();
-        $product = $this->SendService->send($request->email,$request->title,$request->content);
+        $account = $this->KeyService->getUserByKey($request->key)->toarray();
+        $product = $this->SendService->send($request->email,$request->title,$request->content,$account);
         DB::commit();
         return ApiResponse::json(["message"=>"發送成功"]);
     }
