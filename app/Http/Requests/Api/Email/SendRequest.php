@@ -8,5 +8,6 @@ class SendRequest extends BasicRequest
 {
     public $extendRules = [
         'email' =>  ['required','email'],
+        'title' =>  ['required','string','max:100'],
     ];
 }

@@ -8,6 +8,7 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 use Illuminate\Support\Facades\Event;
 use App\Models\Company\Points\Point;
 use App\Events\Mail\mailgun;
+use App\Events\Mail\smtp;
 use App\Listeners\Point\ReducePoint;
 
 class EventServiceProvider extends ServiceProvider
@@ -24,7 +25,11 @@ class EventServiceProvider extends ServiceProvider
         mailgun::class => [
             \App\Listeners\MailGun\SendMail::class,
             ReducePoint::class,
-        ]
+        ],
+        smtp::class => [
+            \App\Listeners\Mail\SendMail::class,
+            ReducePoint::class,
+        ],
     ];
 
     /**
