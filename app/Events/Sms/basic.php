@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Events\Mail;
+namespace App\Events\Sms;
 
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
@@ -9,12 +9,10 @@ class basic
 {
     use Dispatchable, SerializesModels;
 
-    public $recipient;
+    public $phone;
     public $content;
-    public $title;
     public $product;
     public $account;
-    public $setting;
     /**
      * Create a new event instance.
      *
@@ -22,12 +20,9 @@ class basic
      */
     public function __construct($data)
     {
-        $this->recipient = $data['recipient'];
+        $this->phone = $data['phone'];
         $this->content = $data['content'];
-        $this->title    =   $data['title'];
         $this->product    =   $data['product'];
         $this->account      =   $data['account'];
-        $this->setting =   $data['setting'];
     }
-
 }

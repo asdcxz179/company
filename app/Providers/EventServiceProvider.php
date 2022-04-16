@@ -10,6 +10,7 @@ use App\Models\Company\Points\Point;
 use App\Events\Mail\mailgun;
 use App\Events\Mail\smtp;
 use App\Listeners\Point\ReducePoint;
+use App\Events\Sms\nexmo;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -23,12 +24,18 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
         ],
         mailgun::class => [
-            \App\Listeners\MailGun\SendMail::class,
             ReducePoint::class,
+            \App\Listeners\MailGun\SendMail::class,
         ],
         smtp::class => [
-            \App\Listeners\Mail\SendMail::class,
             ReducePoint::class,
+            \App\Listeners\Mail\SendMail::class,
+        ],
+
+
+        nexmo::class => [
+            ReducePoint::class,
+            \App\Listeners\Sms\SendSms::class,
         ],
     ];
 

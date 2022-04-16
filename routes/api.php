@@ -20,4 +20,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::prefix('v1')->namespace('App\Http\Controllers\Api')->name('api.')->group(function(){
     Route::apiResource('email/send', 'Email\SendController', ['only' => ["store"]]);
+    Route::apiResource('sms/send', 'Sms\SendController', ['only' => ["store"]]);
 });
