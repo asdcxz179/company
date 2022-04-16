@@ -31,7 +31,7 @@ class SendController extends Controller
     public function store(SendRequest $request)
     {
         DB::beginTransaction();
-        $product = $this->SendService->send();
+        $product = $this->SendService->send($request->email,$request->title,$request->content);
         DB::commit();
         return ApiResponse::json(["message"=>"發送成功"]);
     }

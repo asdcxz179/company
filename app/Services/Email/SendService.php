@@ -32,17 +32,26 @@ class SendService
         $this->ProductRepository = $ProductRepository;
         $this->ChannelRepository = $ChannelRepository;
     }
-    
-    public function send() {
+        
+    /**
+     * 送出郵件
+     * @param  mixed $recipient
+     * @param  mixed $title
+     * @param  mixed $content
+     * @return void
+     */
+    public function send(string $recipient,string $title,string $content) {
         $product = $this->ProductRepository->where('code','email')->first();
         if(!$product->status || !$product->channel) {
             throw new ErrorException([],"通道維護中",500);
         }
-        $channel = $product->channel;
-        $fee = $product->default_fee;
-
-        
-
+        $channel = $product->Channel;
+        "\App\Events\Mail\\{$channel->type}"::dispatch([
+            'recipient' =>  $recipient,
+            'content'   =>  $content,
+            'title'   =>  $title,
+            'setting'   =>  $channel->setting,
+        ]);
     }
     
 }

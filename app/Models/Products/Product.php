@@ -27,4 +27,8 @@ class Product extends DinjModel
         $name = "admin::Admin.Products.Status.{$value}";
         return Lang::has($name)?trans($name):$value;
     }
+
+    public function Channel() {
+        return $this->hasOne(Channel::class,'id','channel');
+    }
 }

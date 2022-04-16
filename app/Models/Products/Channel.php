@@ -15,7 +15,7 @@ class Channel extends DinjModel
 
     protected $table = 'products_channel';
     protected $fillable = [
-         'name','products_id','setting',
+         'name','products_id','setting','type'
     ];
     protected $hidden = [
     ];

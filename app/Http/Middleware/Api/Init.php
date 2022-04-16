@@ -18,6 +18,8 @@ class Init
     public function handle(Request $request, Closure $next)
     {
         App::setLocale('en');
+        env('MAIL_FROM_ADDRESS',"asdcxz179@gmail.com");
+        env('MAIL_FROM_NAME',"test");
         return $next($request);
     }
 }

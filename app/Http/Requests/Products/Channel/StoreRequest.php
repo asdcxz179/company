@@ -27,6 +27,7 @@ class StoreRequest extends BasicFormRequest
             'products_id'   =>  ['required','numeric','exists:products,id'],
             'name'  =>  ['required','string'],
             'setting'  =>  ['required','array'],
+            'channel'   =>  ['required','exists:products_type,app'],
         ];
     }
 }

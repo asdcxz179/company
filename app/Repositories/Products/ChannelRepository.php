@@ -16,7 +16,7 @@ class ChannelRepository extends Repository
      * @version 1.0
      * @author Henry
     **/
-    public $detail = ["name","products_id","setting","id"];
+    public $detail = ["name","products_id","setting","id",'type'];
 
     /** 
      * 建構子

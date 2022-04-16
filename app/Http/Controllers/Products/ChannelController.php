@@ -38,7 +38,7 @@ class ChannelController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        $this->ChannelService->addChannel($request->products_id,$request->name,$request->setting);
+        $this->ChannelService->addChannel($request->products_id,$request->channel,$request->name,$request->setting);
         return ApiResponse::json(["message"=>"新增成功"]);
     }
 

@@ -46,9 +46,10 @@ class ChannelService
      * @param  mixed $setting
      * @return void
      */
-    public function addChannel(int $product_id,string $name,array $setting) {
+    public function addChannel(int $product_id,string $type,string $name,array $setting) {
         $data = [
             'products_id'   =>  $product_id,
+            'type'          =>  $type,
             'name'          =>  $name,
             'setting'       =>  json_encode($setting),
         ];
